@@ -38,7 +38,7 @@ namespace GIK299_Projektuppgift_grupp46
                        BookingManager.RemoveBooking();
                         break;
                     case "3":
-                        ChangeBooking();
+                        BookingManager.ChangeBooking();
                         break;
                     case "4":
                         ShowTodaysBooking();
@@ -67,10 +67,7 @@ namespace GIK299_Projektuppgift_grupp46
             }
         }
 
-        static void ChangeBooking()
-        {
-
-        }
+      
 
         static void ShowTodaysBooking()
         {

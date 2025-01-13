@@ -105,7 +105,7 @@ namespace GIK299_Projektuppgift_grupp46
             DateTime dateToRemove;
             while(!DateTime.TryParse(Console.ReadLine(), out dateToRemove))
             {
-                Console.WriteLine("Felaktigt datumformat (ÅÅÅÅ-MM-DD), prova igen.");
+                Console.WriteLine("Felaktigt datumformat (ÅÅÅÅ-MM-DD), försök igen.");
                 Console.Write("Ange bokningsdatum (ÅÅÅÅ-MM-DD): ");
             }
             Console.Write("Ange bokningstid (HH:MM): ");
@@ -128,8 +128,70 @@ namespace GIK299_Projektuppgift_grupp46
                 
             }
         }
+       public static void ChangeBooking()
+        {
+            ShowAllBookings();
+           
+           if (bookings.Count == 0)
+            {
+                return;
+            }
 
-            public static void ShowAllBookings()
+            Console.WriteLine("Ange kundens namn för bokningen du vill ändra: ");
+            string customerToChange = Console.ReadLine();
+
+            Console.WriteLine("Ange bokingsdatum (ÅÅÅÅ-MM-DD) för bokningen du vill ändra: ");
+            DateTime dateToChange;
+            while (!DateTime.TryParse(Console.ReadLine(),out dateToChange))
+            {
+                Console.WriteLine("Felaktigt datumformat (ÅÅÅÅ-MM-DD), försök igen.");
+                Console.WriteLine("Ange bokningsdatum (ÅÅÅÅ-MM-DD): ");
+            }
+            Console.WriteLine("Ange bokningstid (HH:MM): ");
+            string timeToChange = Console.ReadLine();
+
+            var bookingToChange = bookings.FirstOrDefault(b =>
+            b.CustomerName == customerToChange &&
+                b.Date == dateToChange &&
+                b.Time == timeToChange);
+
+            if (bookingToChange == null)
+            {
+                Console.WriteLine("\nIngen matchande bokning hittades.");
+                return;
+            }
+
+            Console.WriteLine("\nBokning hittad: ");
+            Console.WriteLine(bookingToChange.ToString());
+
+            Console.WriteLine("Ange nytt kundnamn (lämna tomt för att behålla): ");
+            string newCustomerName = Console.ReadLine();
+            if (!string.IsNullOrEmpty(newCustomerName))
+            {
+                bookingToChange.CustomerName = newCustomerName;
+            }
+
+            Console.WriteLine("Ange ny bokningstid (HH:MM) (lämna tomt för att behålla): ");
+            string newTime = Console.ReadLine();
+            if (!string.IsNullOrEmpty(newTime))
+            {
+                bookingToChange.Time = newTime;
+            }
+
+            Console.WriteLine("Ange ny tjänst (lämna tomt för att behålla): ");
+            string newServiceType = Console.ReadLine();
+            if (!string.IsNullOrEmpty(newServiceType))
+            {
+                bookingToChange.ServiceType = newServiceType;
+            }
+
+          
+            Console.WriteLine("\nBokningen har uppdaterats: ");
+            Console.WriteLine(bookingToChange.ToString());
+
+        }
+
+        public static void ShowAllBookings()
         {
             //Console.WriteLine("Alla bokningar: ");
 
