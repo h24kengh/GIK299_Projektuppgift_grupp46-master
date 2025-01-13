@@ -35,7 +35,7 @@ namespace GIK299_Projektuppgift_grupp46
                         BookingManager.AddBooking();
                         break;
                         case "2":
-                        RemoveBooking();
+                       BookingManager.RemoveBooking();
                         break;
                     case "3":
                         ChangeBooking();
@@ -47,7 +47,7 @@ namespace GIK299_Projektuppgift_grupp46
                         ShowBookingForSpecificDay();
                         break;
                     case "6":
-                        ShowAllBookings();
+                        BookingManager.ShowAllBookings();
                         break;
                     case "7":
                         ConfirmWorkDone();
@@ -67,22 +67,6 @@ namespace GIK299_Projektuppgift_grupp46
             }
         }
 
-        //static void AddBooking()
-        //{
-        //    // Skapa en ny instans av BookingManager för att samla in information om bokningen.
-        //    BookingManager bookingManager = new BookingManager();
-        //   bookingManager.GetBookingDetails();  // Hämtar bokningsdetaljer från användaren genom att anropa metoden.
-
-        //    // Lägger till den nya bokningen i listan med bokningar.
-        //    bookings.Add(bookingManager);
-        //    Console.WriteLine("Bokning tillagd: " + bookingManager.ToString()); // Skriver ut en bekräftelse i konsolen 
-        //    // med detaljerna för den nya bokningen.
-        //}
-        static void RemoveBooking()
-        {
-
-        }
-
         static void ChangeBooking()
         {
 
@@ -97,11 +81,7 @@ namespace GIK299_Projektuppgift_grupp46
         {
 
         }
-        static void ShowAllBookings()
-        {
-
-        }
-
+       
         static void ConfirmWorkDone()
         {
         }

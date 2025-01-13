@@ -94,13 +94,58 @@ namespace GIK299_Projektuppgift_grupp46
 
         }
 
+        public static void RemoveBooking()
+        {
+            ShowAllBookings();
+
+            Console.Write("Ange kundens namn för bokningen du vill ta bort: ");
+            string customerToRemove = Console.ReadLine();
+
+            Console.Write("Ange bokningsdatum (ÅÅÅÅ-MM-DD) för bokningen du vill ta bort: ");
+            DateTime dateToRemove;
+            while(!DateTime.TryParse(Console.ReadLine(), out dateToRemove))
+            {
+                Console.WriteLine("Felaktigt datumformat (ÅÅÅÅ-MM-DD), prova igen.");
+                Console.Write("Ange bokningsdatum (ÅÅÅÅ-MM-DD): ");
+            }
+            Console.Write("Ange bokningstid (HH:MM): ");
+            string timeToRemove = Console.ReadLine();
+
+            var bookingToRemove = bookings.FirstOrDefault(b =>
+            b.CustomerName == customerToRemove &&
+            b.Date == dateToRemove &&
+            b.Time == timeToRemove);
+
+            if (bookingToRemove != null)
+            {
+                bookings.Remove(bookingToRemove);
+                Console.WriteLine();
+                Console.WriteLine("Bokningen borttagen!" + bookingToRemove.ToString());
+            }
+            else
+            {
+                Console.WriteLine("\n Ingen matchande bokning.");
+                
+            }
+        }
 
             public static void ShowAllBookings()
         {
-            Console.WriteLine("Alla bokningar: ");
-            foreach (var booking in bookings)
+            //Console.WriteLine("Alla bokningar: ");
+
+            if(bookings.Count == 0)
             {
-                Console.WriteLine(booking.ToString());
+                Console.WriteLine();
+                Console.WriteLine("Det finns inga bokningar just nu.");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine("Alla bokningar: ");
+                foreach (var booking in bookings)
+                {
+                    Console.WriteLine(booking.ToString());
+                }
             }
         }
        
