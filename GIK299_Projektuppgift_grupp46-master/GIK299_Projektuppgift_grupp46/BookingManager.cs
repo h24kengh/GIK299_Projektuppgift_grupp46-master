@@ -15,27 +15,27 @@ namespace GIK299_Projektuppgift_grupp46
 
         public Booking GetBookingDetails()
         {
-            Console.Write("Ange kundens namn: ");
+            Console.Write("\nAnge kundens namn: ");
             CustomerName = Console.ReadLine();
 
-            Console.Write("Ange bilens registreringsnummer (ABC123): ");
+            Console.Write("\nAnge bilens registreringsnummer (ABC123): ");
             VehicleRegNr = Console.ReadLine();
 
-            Console.Write("Ange bokningsdatum (ÅÅÅÅ-MM-DD): ");
+            Console.Write("\nAnge bokningsdatum (ÅÅÅÅ-MM-DD): ");
             DateTime bookingDate;
             while (!DateTime.TryParse(Console.ReadLine(), out bookingDate))
             {
-                Console.WriteLine("Fel: Ogiltigt datumformat. Försök igen.");
-                Console.Write("Ange bokningsdatum (ÅÅÅÅ-MM-DD): ");
+                Console.WriteLine("\nFel: Ogiltigt datumformat. Försök igen.");
+                Console.Write("\nAnge bokningsdatum (ÅÅÅÅ-MM-DD): ");
             }
 
             // Tilldela det bokade datumet
             Date = bookingDate;
 
-            Console.Write("Ange bokningstid (HH:MM): ");
+            Console.Write("\nAnge bokningstid (HH:MM): ");
             Time = Console.ReadLine();
 
-            Console.Write("Ange vilken tjänst som ska utföras: ");
+            Console.Write("\nAnge tjänst (Hjulbyte, Däckhotell, Hjulinställning, Däckbyte): ");
             ServiceType = Console.ReadLine();
 
             // Skapa och returnera ett nytt Booking-objekt
@@ -51,13 +51,22 @@ namespace GIK299_Projektuppgift_grupp46
             return booking; // Returnera objektet
         }
 
+        public static void AddBooking()
+        {
+            BookingManager bookingManager = new BookingManager();
+            bookingManager.GetBookingDetails();
+
+            AddBooking(bookingManager);
+        }
+
         
         public static void AddBooking(BookingManager bookingManager)
         {
             if (IsBookingValid(bookingManager))
             {
                 bookings.Add(bookingManager);
-                Console.WriteLine("Bokningen tillagd: " + bookingManager.ToString());
+                Console.Clear();
+                Console.WriteLine("Bokningen bekräftad! " + bookingManager.ToString());
             }
             else
             {
@@ -81,7 +90,7 @@ namespace GIK299_Projektuppgift_grupp46
 
            public override string ToString()
         {
-            return $"{CustomerName} - {ServiceType} den {Date.ToShortDateString()} kl. {Time}";
+            return $"\nKundnamn: {CustomerName} \tTjänst: {ServiceType} \nDatum: {Date.ToShortDateString()} \tTid: {Time}\n";
 
         }
 

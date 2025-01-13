@@ -9,15 +9,12 @@ namespace GIK299_Projektuppgift_grupp46
         static List<BookingManager> bookings = new List<BookingManager>();
         static void Main(string[] args)
         {
-
-            Console.WriteLine("Däckarns bokningsapp\n");
             Console.WriteLine(new string('*', 80));
+            Console.WriteLine("Däckarns bokningsapp\n");
 
             while (true)
             {
                 // Visa meny för bokningssystem
-                Console.WriteLine("Bokningssystem");
-                Console.WriteLine("Välj ett alternativ:");
                 Console.WriteLine("1.Lägg till bokning");
                 Console.WriteLine("2.Ta bort bokning");
                 Console.WriteLine("3.Ändra bokning");
@@ -27,6 +24,7 @@ namespace GIK299_Projektuppgift_grupp46
                 Console.WriteLine("7.Bekräfta utfört arbete");
                 Console.WriteLine("8.Söka efter lediga dagar och tider");
                 Console.WriteLine("9.Avsluta");
+                Console.Write("\nVälj ett alternativ: ");
 
                 // Läsa och spara valet för användare 
                 var choise = Console.ReadLine();
@@ -34,7 +32,7 @@ namespace GIK299_Projektuppgift_grupp46
                 switch (choise)
                 {
                     case "1":
-                        AddBooking();
+                        BookingManager.AddBooking();
                         break;
                         case "2":
                         RemoveBooking();
@@ -69,17 +67,17 @@ namespace GIK299_Projektuppgift_grupp46
             }
         }
 
-        static void AddBooking()
-        {
-            // Skapa en ny instans av BookingManager för att samla in information om bokningen.
-            BookingManager bookingManager = new BookingManager();
-           bookingManager.GetBookingDetails();  // Hämtar bokningsdetaljer från användaren genom att anropa metoden.
+        //static void AddBooking()
+        //{
+        //    // Skapa en ny instans av BookingManager för att samla in information om bokningen.
+        //    BookingManager bookingManager = new BookingManager();
+        //   bookingManager.GetBookingDetails();  // Hämtar bokningsdetaljer från användaren genom att anropa metoden.
 
-            // Lägger till den nya bokningen i listan med bokningar.
-            bookings.Add(bookingManager);
-            Console.WriteLine("Bokning tillagd: " + bookingManager.ToString()); // Skriver ut en bekräftelse i konsolen 
-            // med detaljerna för den nya bokningen.
-        }
+        //    // Lägger till den nya bokningen i listan med bokningar.
+        //    bookings.Add(bookingManager);
+        //    Console.WriteLine("Bokning tillagd: " + bookingManager.ToString()); // Skriver ut en bekräftelse i konsolen 
+        //    // med detaljerna för den nya bokningen.
+        //}
         static void RemoveBooking()
         {
 
