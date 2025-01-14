@@ -118,21 +118,10 @@ namespace GIK299_Projektuppgift_grupp46
             Console.Write("Ange kundens namn för bokningen du vill ta bort: ");
             string customerToRemove = Console.ReadLine();
 
-            Console.Write("Ange bokningsdatum (ÅÅÅÅ-MM-DD) för bokningen du vill ta bort: ");
-            DateTime dateToRemove;
-            while (!DateTime.TryParse(Console.ReadLine(), out dateToRemove))
-            {
-                Console.WriteLine("Felaktigt datumformat (ÅÅÅÅ-MM-DD), försök igen.");
-                Console.Write("Ange bokningsdatum (ÅÅÅÅ-MM-DD): ");
-            }
-            Console.Write("Ange bokningstid (HH:mm): ");
-            string timeToRemove = Console.ReadLine();
-
             var bookingToRemove = bookings.FirstOrDefault(b =>
-            b.CustomerName == customerToRemove &&
-            b.Date == dateToRemove &&
-            b.Time == timeToRemove);
+            b.CustomerName == customerToRemove);
 
+            
             if (bookingToRemove != null)
             {
                 bookings.Remove(bookingToRemove);
@@ -159,20 +148,8 @@ namespace GIK299_Projektuppgift_grupp46
             Console.Write("Ange kundens namn för bokningen du vill ändra: ");
             string customerToChange = Console.ReadLine();
 
-            Console.Write("Ange bokingsdatum (ÅÅÅÅ-MM-DD) för bokningen du vill ändra: ");
-            DateTime dateToChange;
-            while (!DateTime.TryParse(Console.ReadLine(), out dateToChange))
-            {
-                Console.WriteLine("Felaktigt datumformat (ÅÅÅÅ-MM-DD), försök igen.");
-                Console.Write("Ange bokningsdatum (ÅÅÅÅ-MM-DD): ");
-            }
-            Console.Write("Ange bokningstid (HH:mm): ");
-            string timeToChange = Console.ReadLine();
-
             var bookingToChange = bookings.FirstOrDefault(b =>
-            b.CustomerName == customerToChange &&
-                b.Date == dateToChange &&
-                b.Time == timeToChange);
+            b.CustomerName == customerToChange);
 
             if (bookingToChange == null)
             {
@@ -217,7 +194,9 @@ namespace GIK299_Projektuppgift_grupp46
 
             if (bookings.Count == 0)
             {
+                Console.WriteLine();
                 Console.WriteLine("Det finns inga bokningar idag.");
+                Console.WriteLine();
                 BookingManager.ReturnToMainMenu();
                 return;
             }
@@ -246,7 +225,9 @@ namespace GIK299_Projektuppgift_grupp46
         {
             if (bookings.Count == 0)
             {
+                Console.WriteLine();
                 Console.WriteLine("Det finns inga bokningar i systemet.");
+                Console.WriteLine();
                 ReturnToMainMenu();
                 return;
             }
@@ -374,10 +355,10 @@ namespace GIK299_Projektuppgift_grupp46
     public class Booking
     {
         public DateTime Date { get; set; }
-        public string Time { get; set; }
-        public string CustomerName { get; set; }
-        public string VehicleRegNr { get; set; }
-        public string ServiceType { get; set; }
+        public string? Time { get; set; }
+        public string? CustomerName { get; set; }
+        public string? VehicleRegNr { get; set; }
+        public string? ServiceType { get; set; }
         public bool IsWorkDone { get; set; }
     }
 }

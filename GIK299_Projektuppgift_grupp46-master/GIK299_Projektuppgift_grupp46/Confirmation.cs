@@ -14,29 +14,18 @@ namespace GIK299_Projektuppgift_grupp46
 
             if (bookings.Count == 0)
             {
+                Console.WriteLine();
                 Console.WriteLine("Det finns inga bokningar att bekräfta.");
+                Console.WriteLine();
                 BookingManager.ReturnToMainMenu();
                 return; 
             }
             Console.Write("Ange kundens namn för bokningen: ");
             string customerName = Console.ReadLine();
 
-            Console.Write("Ange bokningsdatum (ÅÅÅÅ-MM-DD): ");
-            DateTime bookingDate;
-            
-            while (!DateTime.TryParse(Console.ReadLine(), out bookingDate))
-            {
-                Console.WriteLine("Felaktigt datumformat, försök igen.");
-                Console.Write("Ange bokningsdatum, (ÅÅÅÅ-MM-DD): ");
-            }
-
-            Console.Write("Ange bokningstid (HH:mm): ");
-            string bookingTime = Console.ReadLine();
-
             var bookingToConfirm = BookingManager.bookings.FirstOrDefault(b=>
-            b.CustomerName == customerName &&
-            b.Date.Date == bookingDate.Date &&
-            b.Time == bookingTime);
+            b.CustomerName == customerName);
+
 
             if (bookingToConfirm == null)
             {
