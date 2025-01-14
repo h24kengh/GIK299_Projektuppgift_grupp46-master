@@ -55,7 +55,7 @@ namespace GIK299_Projektuppgift_grupp46
                         Confirmation.ConfirmWorkDone();
                         break;
                     case "8":
-                        BookingManager.FindAvailableChoises();
+                        BookingManager.ShowAvailableChoises();
                         break;
                     case "9":
                         return;

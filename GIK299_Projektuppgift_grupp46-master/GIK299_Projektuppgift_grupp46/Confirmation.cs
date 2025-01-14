@@ -10,8 +10,14 @@ namespace GIK299_Projektuppgift_grupp46
     {
        public static void ConfirmWorkDone()
         {
-            BookingManager.ShowAllBookings();
+            var bookings = BookingManager.GetAllBookings();
 
+            if (bookings.Count == 0)
+            {
+                Console.WriteLine("Det finns inga bokningar att bekräfta.");
+                BookingManager.ReturnToMainMenu();
+                return; 
+            }
             Console.Write("Ange kundens namn för bokningen: ");
             string customerName = Console.ReadLine();
 
@@ -41,6 +47,7 @@ namespace GIK299_Projektuppgift_grupp46
             bookingToConfirm.IsWorkDone = true;
 
             Console.WriteLine($"Arbetet för bokningen är nu markerat som klart! {bookingToConfirm.ToString()}");
+            BookingManager.ReturnToMainMenu();
 
         }
     }

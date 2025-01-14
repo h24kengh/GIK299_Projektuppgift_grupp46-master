@@ -35,8 +35,17 @@ namespace GIK299_Projektuppgift_grupp46
             Console.Write("\nAnge bokningstid (HH:mm): ");
             Time = Console.ReadLine();
 
-            Console.Write("\nAnge tjänst (Hjulbyte, Däckhotell, Hjulinställning, Däckbyte): ");
-            ServiceType = Console.ReadLine();
+
+
+            Service service;
+            while (true)
+            {
+                Console.Write("\nAnge tjänst (Hjulbyte, Däckhotell, Hjulinställning, Däckbyte): ");
+                string ServiceType = Console.ReadLine();
+                if (Enum.TryParse(ServiceType, true, out service))
+                    break;
+                Console.WriteLine("\nOgiltig tjänst. Ange något av de listade alternativen.");
+            }
 
             // Skapa och returnera ett nytt Booking-objekt
             Booking booking = new Booking()
@@ -66,7 +75,8 @@ namespace GIK299_Projektuppgift_grupp46
             {
                 bookings.Add(bookingManager);
                 Console.Clear();
-                Console.WriteLine("Bokningen bekräftad! " + bookingManager.ToString());
+                Console.WriteLine("Bokningen bekräftad!\n" + bookingManager.ToString());
+                ReturnToMainMenu();
             }
             else
             {
@@ -98,6 +108,13 @@ namespace GIK299_Projektuppgift_grupp46
         {
             ShowAllBookings();
 
+            if (bookings.Count == 0)
+            {
+                return;
+            }
+
+
+
             Console.Write("Ange kundens namn för bokningen du vill ta bort: ");
             string customerToRemove = Console.ReadLine();
 
@@ -121,10 +138,12 @@ namespace GIK299_Projektuppgift_grupp46
                 bookings.Remove(bookingToRemove);
                 Console.WriteLine();
                 Console.WriteLine("Bokningen borttagen!" + bookingToRemove.ToString());
+                ReturnToMainMenu();
             }
             else
             {
-                Console.WriteLine("\n Ingen matchande bokning.");
+                Console.WriteLine("\nIngen matchande bokning.");
+                ReturnToMainMenu();
 
             }
         }
@@ -137,17 +156,17 @@ namespace GIK299_Projektuppgift_grupp46
                 return;
             }
 
-            Console.WriteLine("Ange kundens namn för bokningen du vill ändra: ");
+            Console.Write("Ange kundens namn för bokningen du vill ändra: ");
             string customerToChange = Console.ReadLine();
 
-            Console.WriteLine("Ange bokingsdatum (ÅÅÅÅ-MM-DD) för bokningen du vill ändra: ");
+            Console.Write("Ange bokingsdatum (ÅÅÅÅ-MM-DD) för bokningen du vill ändra: ");
             DateTime dateToChange;
             while (!DateTime.TryParse(Console.ReadLine(), out dateToChange))
             {
                 Console.WriteLine("Felaktigt datumformat (ÅÅÅÅ-MM-DD), försök igen.");
-                Console.WriteLine("Ange bokningsdatum (ÅÅÅÅ-MM-DD): ");
+                Console.Write("Ange bokningsdatum (ÅÅÅÅ-MM-DD): ");
             }
-            Console.WriteLine("Ange bokningstid (HH:mm): ");
+            Console.Write("Ange bokningstid (HH:mm): ");
             string timeToChange = Console.ReadLine();
 
             var bookingToChange = bookings.FirstOrDefault(b =>
@@ -158,27 +177,28 @@ namespace GIK299_Projektuppgift_grupp46
             if (bookingToChange == null)
             {
                 Console.WriteLine("\nIngen matchande bokning hittades.");
+                ReturnToMainMenu();
                 return;
             }
 
             Console.WriteLine("\nBokning hittad: ");
             Console.WriteLine(bookingToChange.ToString());
 
-            Console.WriteLine("Ange nytt kundnamn (lämna tomt för att behålla): ");
+            Console.Write("Ange nytt kundnamn (lämna tomt för att behålla): ");
             string newCustomerName = Console.ReadLine();
             if (!string.IsNullOrEmpty(newCustomerName))
             {
                 bookingToChange.CustomerName = newCustomerName;
             }
 
-            Console.WriteLine("Ange ny bokningstid (HH:mm) (lämna tomt för att behålla): ");
+            Console.Write("Ange ny bokningstid (HH:mm) (lämna tomt för att behålla): ");
             string newTime = Console.ReadLine();
             if (!string.IsNullOrEmpty(newTime))
             {
                 bookingToChange.Time = newTime;
             }
 
-            Console.WriteLine("Ange ny tjänst (lämna tomt för att behålla): ");
+            Console.Write("Ange ny tjänst (lämna tomt för att behålla): ");
             string newServiceType = Console.ReadLine();
             if (!string.IsNullOrEmpty(newServiceType))
             {
@@ -188,11 +208,20 @@ namespace GIK299_Projektuppgift_grupp46
 
             Console.WriteLine("\nBokningen har uppdaterats: ");
             Console.WriteLine(bookingToChange.ToString());
-
+            ReturnToMainMenu();
         }
 
         public static void ShowTodaysBooking()
         {
+            var bookings = BookingManager.GetAllBookings();
+
+            if (bookings.Count == 0)
+            {
+                Console.WriteLine("Det finns inga bokningar idag.");
+                BookingManager.ReturnToMainMenu();
+                return;
+            }
+
             DateTime today = DateTime.Today;
 
             var todaysBookings = bookings.Where(b => b.Date.Date == today).ToList();
@@ -200,6 +229,7 @@ namespace GIK299_Projektuppgift_grupp46
             if (todaysBookings.Count == 0)
             {
                 Console.WriteLine("Det finns inga bokningar idag.");
+                ReturnToMainMenu();
                 return;
             }
 
@@ -209,10 +239,17 @@ namespace GIK299_Projektuppgift_grupp46
                 Console.WriteLine(booking.ToString());
 
             }
+            ReturnToMainMenu();
         }
 
         public static void ShowBookingForSpecificDay()
         {
+            if (bookings.Count == 0)
+            {
+                Console.WriteLine("Det finns inga bokningar i systemet.");
+                ReturnToMainMenu();
+                return;
+            }
             Console.WriteLine();
             Console.Write("Ange datum (ÅÅÅÅ-MM-DD) för att visa bokningar: ");
             DateTime specificDay;
@@ -230,6 +267,7 @@ namespace GIK299_Projektuppgift_grupp46
                 Console.WriteLine();
                 Console.WriteLine("Det finns inga bokningar för den valda dagen.");
                 Console.WriteLine();
+
                 return;
             }
 
@@ -237,7 +275,10 @@ namespace GIK299_Projektuppgift_grupp46
             foreach (var booking in specificDaysBooking)
             {
                 Console.WriteLine(booking.ToString());
+
             }
+            ReturnToMainMenu();
+
         }
 
         public static void ShowAllBookings()
@@ -248,6 +289,7 @@ namespace GIK299_Projektuppgift_grupp46
                 Console.WriteLine();
                 Console.WriteLine("Det finns inga bokningar just nu.");
                 Console.WriteLine();
+
             }
             else
             {
@@ -256,14 +298,17 @@ namespace GIK299_Projektuppgift_grupp46
                 foreach (var booking in bookings)
                 {
                     Console.WriteLine(booking.ToString());
+
                 }
             }
+            ReturnToMainMenu();
+
         }
 
-      
-       public static void FindAvailableChoises()
+
+        public static void ShowAvailableChoises()
         {
-            Console.WriteLine("Ange datum (ÅÅÅÅ-MM-DD");
+            Console.Write("Ange datum (ÅÅÅÅ-MM-DD): ");
             DateTime inputDate;
 
             while (!DateTime.TryParse(Console.ReadLine(), out inputDate))
@@ -280,46 +325,59 @@ namespace GIK299_Projektuppgift_grupp46
                 foreach (string time in availableTimes)
                 {
                     Console.WriteLine(time);
+
                 }
             }
             else
             {
                 Console.WriteLine("Inga tillgängliga tider.");
+
             }
-
-            //List<string> allTimes = new List<string>();
-            //for (int hour = 7; hour < 16; hour++)
-            //{
-            //    for (int minute = 0; minute < 60; minute += 30)
-            //    {
-            //        string timeSlot = new DateTime(availableDate.Year, availableDate.Month, availableDate.Day, hour, minute, 0).ToString("HH:mm");
-            //        allTimes.Add(timeSlot);
-            //    }
-            //}
-
-            //var bookedTimes = bookings.Where(b => b.Date.Date == availableDate.Date)
-            //    .Select(b => b.Time)
-            //    .ToList();
-
-            //List<string> availableTimes = allTimes.Where(time => !bookedTimes.Contains(time)).ToList();
-
-            //return availableTimes;
-
-            //foreach (var time in availableTimes)
-            //{
-            //    Console.WriteLine(time);
-            //}
+            ReturnToMainMenu();
         }
 
-    }
+        public static List<string> FindAvailableChoises(DateTime availableDate)
+        {
+            List<string> allTimes = new List<string>();
+            for (int hour = 7; hour < 16; hour++)
+            {
+                for (int minute = 0; minute < 60; minute += 30)
+                {
+                    string timeSlot = new DateTime(availableDate.Year, availableDate.Month, availableDate.Day, hour, minute, 0).ToString("HH:mm");
+                    allTimes.Add(timeSlot);
+                }
+            }
 
+            var bookedTimes = bookings.Where(b => b.Date.Date == availableDate.Date)
+                .Select(b => b.Time)
+                 .ToList();
+
+            List<string> availableTimes = allTimes.Where(time => !bookedTimes.Contains(time)).ToList();
+
+            return availableTimes;
+            Console.WriteLine();
+
+        }
+        public static void ReturnToMainMenu()
+        {
+            Console.Write("Tryck på valfri tangent för att återgå till startmenyn: ");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+
+        public static List<Booking> GetAllBookings()
+        {
+            return bookings;
+        }
+    }
     public class Booking
     {
         public DateTime Date { get; set; }
-        public string? Time { get; set; }
-        public string? CustomerName { get; set; }
-        public string? VehicleRegNr { get; set; }
-        public string? ServiceType { get; set; }
+        public string Time { get; set; }
+        public string CustomerName { get; set; }
+        public string VehicleRegNr { get; set; }
+        public string ServiceType { get; set; }
         public bool IsWorkDone { get; set; }
     }
 }
