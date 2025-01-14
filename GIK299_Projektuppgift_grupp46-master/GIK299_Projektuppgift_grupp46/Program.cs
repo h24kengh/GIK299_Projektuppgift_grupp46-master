@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GIK299_Projektuppgift_grupp46
 {
-     class Program
+    class Program
     {
         static List<BookingManager> bookings = new List<BookingManager>();
         static void Main(string[] args)
@@ -34,23 +34,23 @@ namespace GIK299_Projektuppgift_grupp46
                     case "1":
                         BookingManager.AddBooking();
                         break;
-                        case "2":
-                       BookingManager.RemoveBooking();
+                    case "2":
+                        BookingManager.RemoveBooking();
                         break;
                     case "3":
                         BookingManager.ChangeBooking();
                         break;
                     case "4":
-                        ShowTodaysBooking();
+                        BookingManager.ShowTodaysBooking();
                         break;
                     case "5":
-                        ShowBookingForSpecificDay();
+                        BookingManager.ShowBookingForSpecificDay();
                         break;
                     case "6":
                         BookingManager.ShowAllBookings();
                         break;
                     case "7":
-                        ConfirmWorkDone();
+                        Confirmation.ConfirmWorkDone();
                         break;
                     case "8":
                         FindAvailableChoises();
@@ -65,30 +65,23 @@ namespace GIK299_Projektuppgift_grupp46
                 }
 
             }
-        }
 
-      
 
-        static void ShowTodaysBooking()
-        {
 
-        }
 
-        static void ShowBookingForSpecificDay()
-        {
 
-        }
-       
-        static void ConfirmWorkDone()
-        {
-        }
-        
-        static void FindAvailableChoises()
-        {
+
+
+
+
+
+            static void FindAvailableChoises()
+            {
+
+            }
+
+
 
         }
-
-        
-
     }
 }

@@ -11,7 +11,7 @@ namespace GIK299_Projektuppgift_grupp46
 {
     public class BookingManager :Booking
     {
-        private static List<Booking> bookings = new List<Booking>();
+        public static List<Booking> bookings = new List<Booking>();
 
         public Booking GetBookingDetails()
         {
@@ -191,10 +191,58 @@ namespace GIK299_Projektuppgift_grupp46
 
         }
 
+        public static void ShowTodaysBooking()
+        {
+            DateTime today = DateTime.Today;
+
+            var todaysBookings = bookings.Where(b => b.Date.Date == today).ToList();
+
+            if (todaysBookings.Count == 0)
+            {
+                Console.WriteLine("Det finns inga bokningar idag.");
+                return;
+            }
+
+            Console.WriteLine("Dagens bokningar: ");
+            foreach (var booking in todaysBookings)
+            {
+                Console.WriteLine(booking.ToString());
+
+            }
+        }
+
+           public static void ShowBookingForSpecificDay()
+            {
+            Console.WriteLine();
+            Console.Write("Ange datum (ÅÅÅÅ-MM-DD) för att visa bokningar: ");
+            DateTime specificDay;
+            while (!DateTime.TryParse(Console.ReadLine(), out specificDay))
+            
+            {
+                Console.WriteLine("Felaktigt datumformat, försök igen.");
+                Console.Write("Ange datum (ÅÅÅÅ-MM-DD): ");
+            }
+
+            var specificDaysBooking = bookings.Where(b => b.Date.Date == specificDay.Date).ToList();
+
+            if (specificDaysBooking.Count == 0) 
+            {
+                Console.WriteLine();
+                Console.WriteLine("Det finns inga bokningar för den valda dagen.");
+                Console.WriteLine();
+                return;
+            }
+
+            Console.WriteLine("Bokningar för den valda dagen: ");
+            foreach (var booking in specificDaysBooking)
+            {
+                Console.WriteLine(booking.ToString());
+            }
+        }
+
         public static void ShowAllBookings()
         {
-            //Console.WriteLine("Alla bokningar: ");
-
+           
             if(bookings.Count == 0)
             {
                 Console.WriteLine();
@@ -203,6 +251,7 @@ namespace GIK299_Projektuppgift_grupp46
             }
             else
             {
+                Console.WriteLine();
                 Console.WriteLine("Alla bokningar: ");
                 foreach (var booking in bookings)
                 {
@@ -223,5 +272,6 @@ namespace GIK299_Projektuppgift_grupp46
         public string? CustomerName { get; set; }
         public string? VehicleRegNr { get; set; }
         public string? ServiceType { get; set; }
+        public bool IsWorkDone { get; set; }
     }
 
