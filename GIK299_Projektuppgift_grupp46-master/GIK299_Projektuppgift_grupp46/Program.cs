@@ -22,12 +22,14 @@ namespace GIK299_Projektuppgift_grupp46
                 Console.WriteLine("5.Visa bokningar för specifik dag");
                 Console.WriteLine("6.Visa alla bokningar");
                 Console.WriteLine("7.Bekräfta utfört arbete");
-                Console.WriteLine("8.Söka efter lediga dagar och tider");
+                Console.WriteLine("8.Visa lediga tider för specifik dag");
                 Console.WriteLine("9.Avsluta");
                 Console.Write("\nVälj ett alternativ: ");
 
                 // Läsa och spara valet för användare 
                 var choise = Console.ReadLine();
+
+               
 
                 switch (choise)
                 {
@@ -53,7 +55,7 @@ namespace GIK299_Projektuppgift_grupp46
                         Confirmation.ConfirmWorkDone();
                         break;
                     case "8":
-                        FindAvailableChoises();
+                        BookingManager.FindAvailableChoises();
                         break;
                     case "9":
                         return;
@@ -65,22 +67,6 @@ namespace GIK299_Projektuppgift_grupp46
                 }
 
             }
-
-
-
-
-
-
-
-
-
-
-            static void FindAvailableChoises()
-            {
-
-            }
-
-
 
         }
     }

@@ -24,7 +24,7 @@ namespace GIK299_Projektuppgift_grupp46
                 Console.Write("Ange bokningsdatum, (ÅÅÅÅ-MM-DD): ");
             }
 
-            Console.Write("Ange bokningstid (HH:MM): ");
+            Console.Write("Ange bokningstid (HH:mm): ");
             string bookingTime = Console.ReadLine();
 
             var bookingToConfirm = BookingManager.bookings.FirstOrDefault(b=>

@@ -9,7 +9,7 @@ using Microsoft.VisualBasic;
 
 namespace GIK299_Projektuppgift_grupp46
 {
-    public class BookingManager :Booking
+    public class BookingManager : Booking
     {
         public static List<Booking> bookings = new List<Booking>();
 
@@ -32,7 +32,7 @@ namespace GIK299_Projektuppgift_grupp46
             // Tilldela det bokade datumet
             Date = bookingDate;
 
-            Console.Write("\nAnge bokningstid (HH:MM): ");
+            Console.Write("\nAnge bokningstid (HH:mm): ");
             Time = Console.ReadLine();
 
             Console.Write("\nAnge tjänst (Hjulbyte, Däckhotell, Hjulinställning, Däckbyte): ");
@@ -59,7 +59,7 @@ namespace GIK299_Projektuppgift_grupp46
             AddBooking(bookingManager);
         }
 
-        
+
         public static void AddBooking(BookingManager bookingManager)
         {
             if (IsBookingValid(bookingManager))
@@ -83,12 +83,12 @@ namespace GIK299_Projektuppgift_grupp46
                     return false;
                 }
             }
-            
-                    return true;
-                }
-            
 
-           public override string ToString()
+            return true;
+        }
+
+
+        public override string ToString()
         {
             return $"\nKundnamn: {CustomerName} \tTjänst: {ServiceType} \nDatum: {Date.ToShortDateString()} \tTid: {Time}\n";
 
@@ -103,12 +103,12 @@ namespace GIK299_Projektuppgift_grupp46
 
             Console.Write("Ange bokningsdatum (ÅÅÅÅ-MM-DD) för bokningen du vill ta bort: ");
             DateTime dateToRemove;
-            while(!DateTime.TryParse(Console.ReadLine(), out dateToRemove))
+            while (!DateTime.TryParse(Console.ReadLine(), out dateToRemove))
             {
                 Console.WriteLine("Felaktigt datumformat (ÅÅÅÅ-MM-DD), försök igen.");
                 Console.Write("Ange bokningsdatum (ÅÅÅÅ-MM-DD): ");
             }
-            Console.Write("Ange bokningstid (HH:MM): ");
+            Console.Write("Ange bokningstid (HH:mm): ");
             string timeToRemove = Console.ReadLine();
 
             var bookingToRemove = bookings.FirstOrDefault(b =>
@@ -125,14 +125,14 @@ namespace GIK299_Projektuppgift_grupp46
             else
             {
                 Console.WriteLine("\n Ingen matchande bokning.");
-                
+
             }
         }
-       public static void ChangeBooking()
+        public static void ChangeBooking()
         {
             ShowAllBookings();
-           
-           if (bookings.Count == 0)
+
+            if (bookings.Count == 0)
             {
                 return;
             }
@@ -142,12 +142,12 @@ namespace GIK299_Projektuppgift_grupp46
 
             Console.WriteLine("Ange bokingsdatum (ÅÅÅÅ-MM-DD) för bokningen du vill ändra: ");
             DateTime dateToChange;
-            while (!DateTime.TryParse(Console.ReadLine(),out dateToChange))
+            while (!DateTime.TryParse(Console.ReadLine(), out dateToChange))
             {
                 Console.WriteLine("Felaktigt datumformat (ÅÅÅÅ-MM-DD), försök igen.");
                 Console.WriteLine("Ange bokningsdatum (ÅÅÅÅ-MM-DD): ");
             }
-            Console.WriteLine("Ange bokningstid (HH:MM): ");
+            Console.WriteLine("Ange bokningstid (HH:mm): ");
             string timeToChange = Console.ReadLine();
 
             var bookingToChange = bookings.FirstOrDefault(b =>
@@ -171,7 +171,7 @@ namespace GIK299_Projektuppgift_grupp46
                 bookingToChange.CustomerName = newCustomerName;
             }
 
-            Console.WriteLine("Ange ny bokningstid (HH:MM) (lämna tomt för att behålla): ");
+            Console.WriteLine("Ange ny bokningstid (HH:mm) (lämna tomt för att behålla): ");
             string newTime = Console.ReadLine();
             if (!string.IsNullOrEmpty(newTime))
             {
@@ -185,7 +185,7 @@ namespace GIK299_Projektuppgift_grupp46
                 bookingToChange.ServiceType = newServiceType;
             }
 
-          
+
             Console.WriteLine("\nBokningen har uppdaterats: ");
             Console.WriteLine(bookingToChange.ToString());
 
@@ -211,13 +211,13 @@ namespace GIK299_Projektuppgift_grupp46
             }
         }
 
-           public static void ShowBookingForSpecificDay()
-            {
+        public static void ShowBookingForSpecificDay()
+        {
             Console.WriteLine();
             Console.Write("Ange datum (ÅÅÅÅ-MM-DD) för att visa bokningar: ");
             DateTime specificDay;
             while (!DateTime.TryParse(Console.ReadLine(), out specificDay))
-            
+
             {
                 Console.WriteLine("Felaktigt datumformat, försök igen.");
                 Console.Write("Ange datum (ÅÅÅÅ-MM-DD): ");
@@ -225,7 +225,7 @@ namespace GIK299_Projektuppgift_grupp46
 
             var specificDaysBooking = bookings.Where(b => b.Date.Date == specificDay.Date).ToList();
 
-            if (specificDaysBooking.Count == 0) 
+            if (specificDaysBooking.Count == 0)
             {
                 Console.WriteLine();
                 Console.WriteLine("Det finns inga bokningar för den valda dagen.");
@@ -242,8 +242,8 @@ namespace GIK299_Projektuppgift_grupp46
 
         public static void ShowAllBookings()
         {
-           
-            if(bookings.Count == 0)
+
+            if (bookings.Count == 0)
             {
                 Console.WriteLine();
                 Console.WriteLine("Det finns inga bokningar just nu.");
@@ -259,12 +259,60 @@ namespace GIK299_Projektuppgift_grupp46
                 }
             }
         }
-       
-}
-            
 
+      
+       public static void FindAvailableChoises()
+        {
+            Console.WriteLine("Ange datum (ÅÅÅÅ-MM-DD");
+            DateTime inputDate;
+
+            while (!DateTime.TryParse(Console.ReadLine(), out inputDate))
+            {
+                Console.WriteLine("Felaktigt datumformat, försök igen");
+                Console.Write("Ange datum (ÅÅÅÅ-MM-DD: ");
+            }
+
+            List<string> availableTimes = BookingManager.FindAvailableChoises(inputDate);
+
+            if (availableTimes.Count > 0)
+            {
+                Console.WriteLine("Tillgängliga tider:");
+                foreach (string time in availableTimes)
+                {
+                    Console.WriteLine(time);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Inga tillgängliga tider.");
+            }
+
+            //List<string> allTimes = new List<string>();
+            //for (int hour = 7; hour < 16; hour++)
+            //{
+            //    for (int minute = 0; minute < 60; minute += 30)
+            //    {
+            //        string timeSlot = new DateTime(availableDate.Year, availableDate.Month, availableDate.Day, hour, minute, 0).ToString("HH:mm");
+            //        allTimes.Add(timeSlot);
+            //    }
+            //}
+
+            //var bookedTimes = bookings.Where(b => b.Date.Date == availableDate.Date)
+            //    .Select(b => b.Time)
+            //    .ToList();
+
+            //List<string> availableTimes = allTimes.Where(time => !bookedTimes.Contains(time)).ToList();
+
+            //return availableTimes;
+
+            //foreach (var time in availableTimes)
+            //{
+            //    Console.WriteLine(time);
+            //}
+        }
 
     }
+
     public class Booking
     {
         public DateTime Date { get; set; }
@@ -274,4 +322,4 @@ namespace GIK299_Projektuppgift_grupp46
         public string? ServiceType { get; set; }
         public bool IsWorkDone { get; set; }
     }
-
+}
