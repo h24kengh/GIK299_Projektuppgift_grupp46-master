@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GIK299_Projektuppgift_grupp46
 {
-    // VI skapar en enum med olika tjänstalternativ.
+    // Vi skapar en enum med olika tjänstalternativ.
     public enum Service
     {
         Hjulbyte,

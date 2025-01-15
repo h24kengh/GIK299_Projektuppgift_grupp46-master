@@ -88,7 +88,7 @@ namespace GIK299_Projektuppgift_grupp46
         {
             foreach (var booking in bookings)
             {
-                if (booking.Date == bookingManager.Date && bookingManager.Time == bookingManager.Time)
+                if (booking.Date == bookingManager.Date && booking.Time == bookingManager.Time)
                 {
                     return false;
                 }
@@ -336,7 +336,7 @@ namespace GIK299_Projektuppgift_grupp46
             List<string> availableTimes = allTimes.Where(time => !bookedTimes.Contains(time)).ToList();
 
             return availableTimes;
-            Console.WriteLine();
+            
 
         }
         public static void ReturnToMainMenu()
@@ -355,10 +355,12 @@ namespace GIK299_Projektuppgift_grupp46
     public class Booking
     {
         public DateTime Date { get; set; }
-        public string? Time { get; set; }
-        public string? CustomerName { get; set; }
-        public string? VehicleRegNr { get; set; }
-        public string? ServiceType { get; set; }
+        public string Time { get; set; }
+        public string CustomerName { get; set; }
+        public string VehicleRegNr { get; set; }
+        public string ServiceType { get; set; }
         public bool IsWorkDone { get; set; }
+
+        
     }
 }
